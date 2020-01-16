@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import HomePage from "./pages/HomePage";
+import MoviePage from './pages/moviePage'
 
 const sample = {
   adult: false,
@@ -89,7 +90,8 @@ const movies = [sample, sample, sample, sample, sample];
 const App = () => {
   return (
     <div className="jumbotron">
-      <HomePage movies={movies} />
+      {/* <HomePage movies={movies} /> */}
+      <MoviePage movie={sample} />
     </div>
   );
 };

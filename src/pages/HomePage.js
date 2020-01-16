@@ -4,7 +4,7 @@ import MovieList from "../components/movieList";
 import FilterControls from "../components/filterControls";
 
 const MovieListPage = ({movies}) => {
-
+ 
   return (
     <>
       <Header numMovies={movies.length} />
