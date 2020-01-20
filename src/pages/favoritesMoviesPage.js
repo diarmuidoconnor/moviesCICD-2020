@@ -1,7 +1,18 @@
 import React from "react";
+import StubAPI from "../api/stubAPI";
+import MovieListPageTemplate from "../components/templateMovieListPage";
 
-const FavoriteMoviesPage = () => {
-    return <h2>Favorite Movies</h2>
-}
+const FavoriteMoviesPage = props => {
+  const toDo = () => true;
 
-export default FavoriteMoviesPage
+  return (
+    <MovieListPageTemplate
+      movies={StubAPI.getAll()}
+      title={"Favorite Movies"}
+      buttonHandler={toDo}
+      // action={movie => <AddReviewButton movie={movie} />}
+    />
+  );
+};
+
+export default FavoriteMoviesPage;
