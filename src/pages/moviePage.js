@@ -1,7 +1,10 @@
-import React, {useState, useEffect}  from "react";
-import MovieHeader from "../components/headerMovie";
+import React, {useState, useEffect } from "react";
+import { Link, Route } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
-import "./moviePage.css";
+import PageTemplate from "../components/templateMoviePage";
+import MovieReviews from "../components/movieReviews";
+// import { useMovie } from "../hooks/useMovie";
+// import { Row } from "../globals/GlobalStyles";
 import {getMovie} from '../api/tmdb-api'
 
 const MoviePage = props => {
@@ -12,33 +15,42 @@ const MoviePage = props => {
       setMovie(movie);
     });
   }, [id]);
-
   return (
     <>
-      {movie ? (
-        <>
-          <MovieHeader movie={movie} />
-          <div className="row">
-            <div className="col-3">
-              <img
-                src={
-                  movie.poster_path
-                    ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                    : "./film-poster-placeholder.png"
-                }
-                className="movie"
-                alt={movie.title}
-              />
-            </div>
-            <div className="col-9">
-              <MovieDetails movie={movie} />
-            </div>
+    {/* {JSON.stringify(movie)} */}
+    {movie ? (
+      <>
+        <PageTemplate movie={movie}>
+          <MovieDetails movie={movie} />
+        </PageTemplate>
+        <div className="row">
+          <div className="col-12 ">
+            {!props.history.location.pathname.endsWith("/reviews") ? (
+              <Link
+                className="btn btn-primary btn-block"
+                to={`/movies/${id}/reviews`}
+              >
+                Show Reviews
+              </Link>
+            ) : (
+              <Link
+                className="btn btn-primary btn-block"
+                to={`/movies/${id}`}
+              >
+                Hide Reviews
+              </Link>
+            )}
           </div>
-        </>
-      ) : (
-        <p>Waiting for contact details</p>
-      )}
-    </>
+        </div>
+        <Route
+          path={`/movies/:id/reviews`}
+          render={props => <MovieReviews movie={movie} {...props} />}
+        />
+      </>
+    ) : (
+      <p>Waiting for contact details</p>
+    )}
+  </>
   );
 };
 

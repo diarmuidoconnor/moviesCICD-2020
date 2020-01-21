@@ -5,7 +5,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import HomePage from "./pages/HomePage";
 import MoviePage from './pages/moviePage'
 import FavoriteMoviesPage from './pages/favoritesMoviesPage'
-
+import MovieReviewPage from './pages/movieReviewPage'
 // const sample = {
 //   adult: false,
 //   backdrop_path: "/5Iw7zQTHVRBOYpA0V6z0yypOPZh.jpg",
@@ -107,7 +107,8 @@ const App = () => {
           </li>
         </ul>
         <Switch>
-        <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
+          <Route path="/reviews/:id" component={MovieReviewPage} />
+          <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
           <Route path="/movies/:id" component={MoviePage} />
           <Route path="/" component={HomePage} />
           <Redirect from="*" to="/" />
