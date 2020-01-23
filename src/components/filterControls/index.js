@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import "./filterControls.css";
-import { getGenres } from "../../api/tmdb-api";
+import { GenresContext } from '../../contexts/genresContext' 
 
 const FilterControls = props => {
-  const [genres, setGenres] = useState([{ id: "0", name: "All" }]);
-  useEffect(() => {
-    getGenres().then(allGenres => {
-      setGenres([genres[0], ...allGenres]);
-    });
-  }, []);
+  const context = useContext(GenresContext);
 
   const handleChange = (e, type, value) => {
     e.preventDefault();
@@ -33,7 +28,7 @@ const FilterControls = props => {
           />
           <span>Genre:</span>
           <select id="genre" onChange={handleGenreChange}>
-            {genres.map(genre => {
+            {context.genres.map(genre => {
               return (
                 <option key={genre.id} value={genre.id}>
                   {genre.name}
