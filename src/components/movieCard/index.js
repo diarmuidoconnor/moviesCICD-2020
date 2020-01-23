@@ -4,12 +4,7 @@ import "./movieCard.css";
 import "../../globals/fontawesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Movie = ({movie, buttonHandler}) => {
-
-  const handleAddToFavorites = e => {
-    e.preventDefault();
-    buttonHandler(movie.id);
-  };
+const Movie = ({movie, action}) => {
 
   return (
     <div className="col-sm-3">
@@ -37,11 +32,7 @@ const Movie = ({movie, buttonHandler}) => {
           </p>
         </div>
         <div className="card-footer">
-          <button type="button" className="btn w-100 btn-primary"
-                onClick={handleAddToFavorites}
-                >
-            Add to Favorites
-          </button>
+           {action(movie)}
         </div>
       </div>
     </div>

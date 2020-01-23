@@ -4,7 +4,7 @@ import MovieList from "../movieList";
 import FilterControls from "../filterControls";
 import GenresContextProvider from "../../contexts/genresContext";
 
-const MovieListPageTemplate = ({ movies, title, buttonHandler }) => {
+const MovieListPageTemplate = ({ movies, title, action }) => {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genre = Number(genreFilter);
@@ -32,7 +32,8 @@ const MovieListPageTemplate = ({ movies, title, buttonHandler }) => {
         />
       </GenresContextProvider>
       <MovieList
-        buttonHandler={buttonHandler}
+              action={action}
+        // buttonHandler={buttonHandler}
         movies={displayedMovies}
       ></MovieList>
     </>
