@@ -2,6 +2,7 @@
 class StubAPI {
     constructor() {
         this.favoriteMovies = [];
+        this.reviews = []
     }
 
     add(movie) {
@@ -11,6 +12,10 @@ class StubAPI {
 
     getAll() {
         return this.favoriteMovies;
+    }
+
+    addReview(review) {
+        this.reviews.push(review)
     }
 
 }

@@ -7,6 +7,7 @@ import MoviePage from "./pages/moviePage";
 import FavoriteMoviesPage from "./pages/favoritesMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import MoviesContextProvider from "./contexts/moviesContext";
+import AddMovieReviewPage from './pages/addMovieReviewPage'
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
                 </li>
               </ul>
               <Switch>
+                <Route exact path="/reviews/form" component={AddMovieReviewPage} />
                 <Route path="/reviews/:id" component={MovieReviewPage} />
                 <Route
                   exact

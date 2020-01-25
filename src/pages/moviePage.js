@@ -1,20 +1,20 @@
-import React, {useState, useEffect } from "react";
+import React from "react";
 import { Link, Route } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
 import MovieReviews from "../components/movieReviews";
-// import { useMovie } from "../hooks/useMovie";
+import  useMovie from "../hooks/useMovie";
 // import { Row } from "../globals/GlobalStyles";
-import {getMovie} from '../api/tmdb-api'
 
 const MoviePage = props => {
   const { id } = props.match.params;
-  const [movie, setMovie] = useState(null);
-  useEffect(() => {
-    getMovie(id).then(movie => {
-      setMovie(movie);
-    });
-  }, [id]);
+  const [movie] = useMovie(id)
+  // const [movie, setMovie] = useState(null);
+  // useEffect(() => {
+  //   getMovie(id).then(movie => {
+  //     setMovie(movie);
+  //   });
+  // }, [id]);
   return (
     <>
     {/* {JSON.stringify(movie)} */}
