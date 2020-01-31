@@ -10,7 +10,7 @@ const MovieListPage = () => {
       <PageTemplate 
         title='All Movies'
         movies={context.movies}
-        action={movie => <AddToFavoritesButton movie={movie} /> }
+        action={movie => <AddToFavoritesButton movie={movie} /> } 
         // buttonHandler={context.addToFavorites}
       />
   );

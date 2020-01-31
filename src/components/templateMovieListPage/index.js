@@ -24,7 +24,7 @@ const MovieListPageTemplate = ({ movies, title, action }) => {
   return (
     <>
       {/* {JSON.stringify(movies[0])} */}
-      <Header title={title} numMovies={displayedMovies.length} />
+      <Header title={title} numMovies={displayedMovies.length} /> 
       <GenresContextProvider>
         <FilterControls
           onUserInput={handleChange}

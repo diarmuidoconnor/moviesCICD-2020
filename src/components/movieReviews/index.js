@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { getMovieReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../util";
 
-export default props => {
+export default ({ movie }) => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getMovieReviews(props.match.params.id).then(reviews => {
+    getMovieReviews(movie.id).then(reviews => {
       setReviews(reviews);
     });
   }, []);
@@ -21,8 +21,7 @@ export default props => {
         </tr>
       </thead>
       <tbody>
-        {reviews &&
-          reviews.map(r => {
+        {reviews.map(r => {
             return (
               <tr key={r.id}>
                 <td>{r.author}</td>
@@ -34,7 +33,7 @@ export default props => {
                       pathname: `/reviews/${r.id}`,
                       state: {
                         review: r,
-                        movie: props.movie
+                        movie: movie
                       }
                     }}
                   >
