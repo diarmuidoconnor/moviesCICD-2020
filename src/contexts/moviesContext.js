@@ -9,14 +9,20 @@ const MoviesContextProvider = props => {
   const [movies, setMovies] = useState([]);
 
   const addToFavorites = movieId => {
-    setMovies(movies => {
-      const index = movies.map(m => m.id).indexOf(movieId);
-      StubAPI.add(movies[index]);
-      movies.splice(index, 1);
-      return [...movies];
-    });
+    const index = movies.map(m => m.id).indexOf(movieId);
+    StubAPI.add(movies[index]);
+    const updatedList = [...movies]
+    updatedList.splice(index, 1);
+    setMovies(updatedList)
+    // setMovies(movies => {
+    //   const index = movies.map(m => m.id).indexOf(movieId);
+    //   StubAPI.add(movies[index]);
+    //   movies.splice(index, 1);
+    //   return [...movies];
+    // });
   };
   useEffect(() => {
+    console.log('movies context')
     getMovies().then(movies => {
       setMovies(movies);
     });

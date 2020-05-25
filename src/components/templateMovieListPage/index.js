@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../headerMovieList";
 import MovieList from "../movieList";
 import FilterControls from "../filterControls";
-import GenresContextProvider from "../../contexts/genresContext";
 
 const MovieListPageTemplate = ({ movies, title, action }) => {
   const [nameFilter, setNameFilter] = useState("");
@@ -25,16 +24,13 @@ const MovieListPageTemplate = ({ movies, title, action }) => {
     <>
       {/* {JSON.stringify(movies[0])} */}
       <Header title={title} numMovies={displayedMovies.length} /> 
-      <GenresContextProvider>
         <FilterControls
           onUserInput={handleChange}
           numMovies={displayedMovies.length}
         />
-      </GenresContextProvider>
       <MovieList
-              action={action}
-        // buttonHandler={buttonHandler}
-        movies={displayedMovies}
+          action={action}
+          movies={displayedMovies}
       ></MovieList>
     </>
   );
