@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
+import { Link, Route, withRouter } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
 import MovieReviews from "../components/movieReviews";
@@ -54,4 +54,4 @@ const MoviePage = props => {
   );
 };
 
-export default MoviePage;
+export default withRouter(MoviePage);

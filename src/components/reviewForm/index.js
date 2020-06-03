@@ -1,19 +1,21 @@
-import React from "react";
+import React, {useContext } from "react";
 import "./reviewForm.css";
 import useForm from "react-hook-form";
-import stubAPI from "../../api/stubAPI";
+import {MoviesContext} from '../../contexts/moviesContext'
+import { withRouter } from "react-router-dom";
 
-const ReviewForm = ({ movie }) => {
+const ReviewForm = ({ movie, history }) => {
   const { register, handleSubmit, errors, reset } = useForm();
+  const context = useContext(MoviesContext);
 
   const onSubmit = data => {
     data.movieId = movie.id;
-    stubAPI.addReview(data);
-    console.log(data);
-    reset({
-      author: "",
-      content: ""
-    });
+    context.addReview(movie, data)
+    history.push("/movies/favorites");
+    // reset({
+    //   author: "",
+    //   content: ""
+    // });
   };
 
   return (
@@ -24,6 +26,7 @@ const ReviewForm = ({ movie }) => {
           type="text"
           className="form-control"
           placeholder="Author"
+          defaultValue={movie.review ? movie.review.author : ""}
           name="author"
           ref={register({ required: "Author name required" })}
         />
@@ -35,6 +38,7 @@ const ReviewForm = ({ movie }) => {
           type="text"
           className="form-control"
           placeholder="Write your review"
+          defaultValue={movie.review ? movie.review.content : ""}
           name="content"
           ref={register({
             required: "No review text",
@@ -65,4 +69,4 @@ const ReviewForm = ({ movie }) => {
   );
 };
 
-export default ReviewForm;
+export default withRouter(ReviewForm);
