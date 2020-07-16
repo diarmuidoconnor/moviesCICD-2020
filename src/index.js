@@ -16,7 +16,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="jumbotron">
-        <SiteHeader /> {/* New Header    */}
+        <SiteHeader /> 
         <div className="container-fluid">
           <MoviesContextProvider>
             <GenresContextProvider>

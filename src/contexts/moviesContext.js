@@ -57,6 +57,7 @@ const MoviesContextProvider = (props) => {
       dispatch({ type: "load", payload: { movies } });
       // setMovies(movies);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

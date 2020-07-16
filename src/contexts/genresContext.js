@@ -11,6 +11,7 @@ const GenresContextProvider = props => {
       getGenres().then(allGenres => {
         setGenres([genres[0], ...allGenres]);
       });
+          // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
