@@ -52,7 +52,6 @@ const MoviesContextProvider = (props) => {
     dispatch({ type: "add-review", payload: { movie, review } });
   };
   useEffect(() => {
-    console.log("movies context");
     getMovies().then((movies) => {
       dispatch({ type: "load", payload: { movies } });
       // setMovies(movies);

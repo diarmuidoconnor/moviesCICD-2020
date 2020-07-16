@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import StubAPI from "../api/stubAPI";
 import MovieListPageTemplate from "../components/templateMovieListPage";
 import AddReviewButton from '../components/buttons/addReview'
 import {MoviesContext} from '../contexts/moviesContext'

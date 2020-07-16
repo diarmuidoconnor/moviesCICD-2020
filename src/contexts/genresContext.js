@@ -6,8 +6,6 @@ export const GenresContext = createContext(null)
 const GenresContextProvider = props => {
     const [genres, setGenres] = useState([{ id: "0", name: "All" }]);
     useEffect(() => {
-      console.log('genre context')
-
       getGenres().then(allGenres => {
         setGenres([genres[0], ...allGenres]);
       });
