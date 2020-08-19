@@ -48,7 +48,7 @@ const MoviePage = props => {
         />
       </>
     ) : (
-      <p>Waiting for contact details</p>
+      <p>Waiting for movie details</p>
     )}
   </>
   );
