@@ -1,10 +1,11 @@
-import React from "react";
+import React, {Suspense, lazy } from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
-import MovieReviews from "../components/movieReviews";
+// import MovieReviews from "../components/movieReviews";
 import  useMovie from "../hooks/useMovie";
 // import { Row } from "../globals/GlobalStyles";
+const  MovieReviews = lazy ( () => import("../components/movieReviews" ) )
 
 const MoviePage = props => {
   const { id } = props.match.params;
@@ -41,11 +42,14 @@ const MoviePage = props => {
               </Link>
             )}
           </div>
-        </div>
+        </div> 
+        <Suspense fallback={<h1>... Loading Reviews...</h1> }>
+
         <Route
           path={`/movies/:id/reviews`}
           render={props => <MovieReviews movie={movie} {...props} />}
         />
+        </Suspense>
       </>
     ) : (
       <p>Waiting for movie details</p>
