@@ -1,0 +1,34 @@
+image: cypress/base:12
+
+stages:
+  - install
+
+# to cache both npm modules and Cypress binary we use environment variables
+# to point at the folders we can list as paths in "cache" job settings
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+# cache using branch  name
+# https://gitlab.com/help/ci/caching/index.md
+cache:
+   key:
+    files:
+      - package.json
+   paths:
+    - .npm
+    - cache/Cypress
+    - node_modules
+
+install:
+  stage: install
+
+  script:
+    - npm ci
+    # check Cypress binary path and cached versions
+    # useful to make sure we are not carrying around old versions
+    - npx cypress cache path
+    - npx cypress cache list
+    - $(npm bin)/print-env CI
+    - npm run cy:verify
+    - npm run cy:info

@@ -7,7 +7,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
-    "cypress": "^5.1.0",
     "dotenv": "^8.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -22,7 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "cy:verify": "cypress verify",
+    "cy:info": "cypress info"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,6 +35,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@bahmutov/print-env": "1.2.0",
+    "cypress": "^5.1.0",
+    "start-server-and-test": "1.10.6",
     "@storybook/addon-actions": "^5.3.1",
     "@storybook/react": "^5.3.1",
     "babel-loader": "^8.0.6"
