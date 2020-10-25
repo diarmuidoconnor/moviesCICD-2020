@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import HomePage from "./pages/HomePage";
-import LandingPage from "./pages/landing";
+// import LandingPage from "./pages/landingPage";
 // import MoviePage from "./pages/moviePage";
 // import FavoriteMoviesPage from "./pages/favoritesMoviesPage";
 // import MovieReviewPage from "./pages/movieReviewPage";
@@ -41,8 +41,8 @@ const App = () => {
                     component={FavoriteMoviesPage}
                   />
                   <Route path="/movies/:id" component={MoviePage} />
-                  <Route path="/discover" exact component={HomePage} />
-                  <Route path="/" exact component={LandingPage} />
+                  {/* <Route path="/discover" exact component={HomePage} /> */}
+                  <Route path="/" exact component={HomePage} />
                   <Redirect from="*" to="/" />
                 </Switch>
               </Suspense>
