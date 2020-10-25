@@ -8,7 +8,7 @@ const MovieListPage = () => {
 
   return (
       <PageTemplate 
-        title='All Movies'
+        title='No. Movies'
         movies={context.movies}
         action={movie => <AddToFavoritesButton movie={movie} /> } 
         // buttonHandler={context.addToFavorites}
