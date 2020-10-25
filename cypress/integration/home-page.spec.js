@@ -1,6 +1,14 @@
 let movies;
-describe("Main View ", () => {
-  beforeEach(() => {
+const filterByTitle = (movieList, string) =>
+  movieList.filter(
+    (m) => m.title.toLowerCase().search(string.toLowerCase()) !== -1
+  );
+
+const filterByGenre = (movieList, genreId) =>
+  movieList.filter((m) => m.genre_ids.includes(genreId));
+
+describe("Home Page ", () => {
+  before(() => {
     cy.request(
       `https://api.themoviedb.org/3/discover/movie?api_key=${Cypress.env(
         "TMDB_KEY"
@@ -10,65 +18,92 @@ describe("Main View ", () => {
       .then((response) => {
         movies = response.results;
       });
+  });
+  beforeEach(() => {
     cy.visit("/");
-    cy.get(".card").eq(1).as("targetcard");
   });
 
-  it("displays page header", () => {
-    cy.get("h2").contains("All Movies");
-    cy.get(".badge").should("contain", 20);
-  });
+  describe("Base tests", () => {
+    it("displays page header", () => {
+      cy.task("log", `No. movies received ${movies.length} `);
+      cy.get("h2").contains("No. Movies");
+      cy.get(".badge").contains(20);
+    });
 
-  it("displays movie cards in correct positions", () => {
-    cy.get(".card").each(($card, index) => {
-      cy.wrap($card).find(".card-title").should("contain", movies[index].title);
+    it("displays movie cards in correct positions", () => {
+      cy.get(".card").each(($card, index) => {
+        cy.wrap($card)
+          .find(".card-title")
+          .should("have.text", movies[index].title);
+      });
     });
   });
   describe("Filtering", () => {
-    // Use custom commands to DRY code
-    it("should display movies with the specified title substring only", () => {
-      let searchString = "m";
-      let displayedMovies = movies.filter((m) => {
-        return m.title.toLowerCase().search(searchString) !== -1;
+    describe("By movie title", () => {
+      it("should display movies with 'p'  in the title", () => {
+        const searchString = "p";
+        const matchingMovies = filterByTitle(movies, searchString);
+        cy.get("input").clear().type(searchString);
+        cy.get(".card").should("have.length", matchingMovies.length);
+        cy.get(".card").each(($card, index) => {
+          cy.wrap($card)
+            .find(".card-title")
+            .should("have.text", matchingMovies[index].title);
+        });
       });
-      cy.get("input").clear().type(searchString); //should("contain", 50);
-      cy.get(".card").should("have.length", displayedMovies.length);
-      searchString = "o";
-      displayedMovies = movies.filter((m) => {
-        return m.title.toLowerCase().search(searchString) !== -1;
+      it("should display movies with 'o' in the title", () => {
+        const searchString = "o";
+        const matchingMovies = filterByTitle(movies, searchString);
+        cy.get("input").clear().type(searchString); //should("contain", 50);
+        cy.get(".card").should("have.length", matchingMovies.length);
+        cy.get(".card").each(($card, index) => {
+          cy.wrap($card)
+            .find(".card-title")
+            .should("have.text", matchingMovies[index].title);
+        });
       });
-      cy.get("input").clear().type(searchString); //should("contain", 50);
-      cy.get(".card").should("have.length", displayedMovies.length);
+      it("should display no movie card when the specified title substring is xyz ", () => {
+        let searchString = "xyz";
+        let matchingMovies = filterByTitle(movies, searchString);
+        cy.get("input").clear().type(searchString); //should("contain", 50);
+        cy.get(".card").should("have.length", matchingMovies.length);
+      });
     });
-    it("should display no movie card when the specified title substring is xyz ", () => {
-      let searchString = "xyz";
-      let displayedMovies = movies.filter((m) => {
-        return m.title.toLowerCase().search(searchString) !== -1;
+    describe("By movie genre", () => {
+      it("should display movies with the specified genre only", () => {
+        let selectedGenreId = 35;
+        let selectedGenreText = "Comedy";
+        let matchingMovies = filterByGenre(movies, selectedGenreId);
+        cy.get("select").select(selectedGenreText); 
+        cy.get(".card").should("have.length", matchingMovies.length);
+        cy.get(".card").each(($card, index) => {
+          cy.wrap($card)
+            .find(".card-title")
+            .should("have.text", matchingMovies[index].title);
+        });
       });
-      cy.get("input").clear().type(searchString); //should("contain", 50);
-      cy.get(".card").should("have.length", displayedMovies.length);
     });
-    it("should display movies with the specified genre only", () => {
-      let selectedGenreId = 35;
-      let selectedGenreText = "Comedy";
-      let displayedMovies = movies.filter((m) => {
-        return m.genre_ids.includes(selectedGenreId);
+    describe("By a combination of title and genre", () => {
+      it("should display the matching movies", () => {
+        const searchString = "o";
+        let selectedGenreId = 35;
+        let selectedGenreText = "Comedy";
+        let matchingMovies = filterByTitle( filterByGenre(movies, selectedGenreId), searchString) ;
+        cy.get("select").select(selectedGenreText);
+        cy.get("input").clear().type(searchString); //should("contain", 50);
+        cy.get(".card").should("have.length", matchingMovies.length);
+        cy.get(".card").each(($card, index) => {
+          cy.wrap($card)
+            .find(".card-title")
+            .should("have.text", matchingMovies[index].title);
+        });
       });
-      cy.get("select").select(selectedGenreText); //should("contain", 50);
-      cy.get(".card").should("have.length", displayedMovies.length);
-      selectedGenreId = 12;
-      selectedGenreText = "Adventure";
-      displayedMovies = movies.filter((m) => {
-        return m.genre_ids.includes(selectedGenreId);
-      });
-      cy.get("select").select(selectedGenreText); //should("contain", 50);
-      cy.get(".card").should("have.length", displayedMovies.length);
     });
   });
-  describe("Navigation", () => {
-    it("navigate to the movie page when clicked", () => {
-      cy.get("@targetcard").find("img").click();
-      cy.url().should("include", `/movies/${movies[1].id}`);
-    });
-  });
+  // // describe("Navigation", () => {
+  // //   it("navigate to the movie page when clicked", () => {
+  // //     cy.get(".card").eq(1).find("img").click();
+  // //     cy.url().should("include", `/movies/${movies[1].id}`);
+  // //   });
+  // // });
 });
