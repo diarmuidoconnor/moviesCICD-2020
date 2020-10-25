@@ -1,10 +1,10 @@
 import { excerpt } from "../../src/util";
 
-let movieId = 605116; // Project Power
+let movieId;
 let movie;
 let reviews;
-describe("Main View ", () => {
-  beforeEach(() => {
+describe("Movie Details Page", () => {
+  before(() => {
     cy.request(
       `https://api.themoviedb.org/3/discover/movie?api_key=${Cypress.env(
         "TMDB_KEY"
@@ -15,7 +15,8 @@ describe("Main View ", () => {
         return response.results[2].id;
       })
       // Remove above code - hard wired movie Id
-      .then((movieIdignored) => {
+      .then((randomMovieId) => {
+        movieId = randomMovieId;
         return cy
           .request(
             `https://api.themoviedb.org/3/movie/${movieId}?api_key=${Cypress.env(
@@ -27,20 +28,22 @@ describe("Main View ", () => {
       .then((movieDetails) => {
         movie = movieDetails;
         return movieDetails.id;
-      })
-      .then((movieId) => {
-        return cy
-          .request(
-            `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${Cypress.env(
-              "TMDB_KEY"
-            )}`
-          )
-          .its("body");
-      })
-      .then((response) => {
-        reviews = response.results;
-        cy.visit(`/movies/${movie.id}`);
       });
+    // .then((movieId) => {
+    //   return cy
+    //     .request(
+    //       `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${Cypress.env(
+    //         "TMDB_KEY"
+    //       )}`
+    //     )
+    //     .its("body");
+    // })
+    // .then((response) => {
+    //   reviews = response.results;
+    // });
+  });
+  beforeEach(() => {
+    cy.visit(`/movies/${movie.id}`);
   });
 
   it("displays page header", () => {
@@ -59,36 +62,49 @@ describe("Main View ", () => {
         cy.get("li").eq(3).contains(movie.release_date);
       });
   });
-  describe("Reviews", () => {
-    it("should show and hide reviews table via button", () => {
-      cy.get(".row").eq(2).find("a").click();
-      cy.get("table")
-        .find("thead")
-        .within(() => {
-          cy.get("th").eq(0).contains("Author");
-          cy.get("th").eq(1).contains("Excerpt");
-        });
-      cy.get(".row").eq(2).find("a").click();
-      cy.get("table").should("not.exist");
-    });
-    it("should display all the review excerptss", () => {
-      cy.get(".row").eq(2).find("a").click();
-      cy.get("table")
-        .find("tbody")
-        .find("tr")
-        .its("length")
-        .should("equal", reviews.length);
-      cy.get("table")
-        .find("tbody")
-        .find("tr")
-        .each(($tr, index) => {
-          cy.wrap($tr).find("td").eq(0).contains(reviews[index].author);
-          console.log(excerpt(reviews[index].content));
-          cy.wrap($tr)
-            .find("td")
-            .eq(1) //.contains(`${excerpt(reviews[index].content)}`)
-            .should('have.text', excerpt(reviews[index].content))
-        });
-    });
+
+  it("displays the Home icon with the correct URL value", () => {
+    cy.get(".fa-home")
+      .parent()
+      .should("have.attr", "href")
+      .should("include", movie.homepage);
   });
+  
+  it("displays the movie's poster", () => {
+    cy.get("img")
+      .should("have.attr", "src")
+      .should("include", movie.poster_path);
+  });
+  // describe("Reviews", () => {
+  //   it("should show and hide reviews table via button", () => {
+  //     cy.get(".row").eq(2).find("a").click();
+  //     cy.get("table")
+  //       .find("thead")
+  //       .within(() => {
+  //         cy.get("th").eq(0).contains("Author");
+  //         cy.get("th").eq(1).contains("Excerpt");
+  //       });
+  //     cy.get(".row").eq(2).find("a").click();
+  //     cy.get("table").should("not.exist");
+  //   });
+  //   it("should display all the review excerptss", () => {
+  //     cy.get(".row").eq(2).find("a").click();
+  //     cy.get("table")
+  //       .find("tbody")
+  //       .find("tr")
+  //       .its("length")
+  //       .should("equal", reviews.length);
+  //     cy.get("table")
+  //       .find("tbody")
+  //       .find("tr")
+  //       .each(($tr, index) => {
+  //         cy.wrap($tr).find("td").eq(0).contains(reviews[index].author);
+  //         console.log(excerpt(reviews[index].content));
+  //         cy.wrap($tr)
+  //           .find("td")
+  //           .eq(1) //.contains(`${excerpt(reviews[index].content)}`)
+  //           .should("have.text", excerpt(reviews[index].content));
+  //       });
+  //   });
+  // });
 });

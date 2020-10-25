@@ -12,7 +12,7 @@
     "react-dom": "^16.11.0",
     "react-hook-form": "^3.29.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.0",
+    "react-scripts": "3.4.3",
     "source-map-explorer": "^2.5.0"
   },
   "scripts": {
@@ -23,7 +23,9 @@
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "cy:verify": "cypress verify",
-    "cy:info": "cypress info"
+    "cy:info": "cypress info",
+    "start:ci": "start-server-and-test 'http-server ./build  -p 3000' 3000 'cypress run --browser chrome --record '",
+    "start:server": "cd ./build && httpserver -p 3000 && wait-on http://localhost:3000"
   },
   "eslintConfig": {
     "extends": "react-app"
