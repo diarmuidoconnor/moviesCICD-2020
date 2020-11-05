@@ -30,7 +30,7 @@ describe("Home Page ", () => {
       cy.get(".badge").contains(20);
     });
 
-    it("displays movie cards in correct positions", () => {
+    it.only("displays movie cards in correct positions", () => {
       cy.get(".card").each(($card, index) => {
         cy.wrap($card)
           .find(".card-title")
