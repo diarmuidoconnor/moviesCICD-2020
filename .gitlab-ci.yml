@@ -10,7 +10,7 @@ stages:
 
 # variables:
 #   npm_config_cache: "$CI_PROJECT_DIR/.npm"
-#   CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+  #  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
 
 # cache using branch  name
 # https://gitlab.com/help/ci/caching/index.md
@@ -19,9 +19,9 @@ stages:
 #    key:
 #     files:
 #       - package.json
-#    paths:
+  #  paths:
 #     - .npm
-#     - cache/Cypress
+    #  - cache/Cypress
 #     - node_modules
 
 install_dependencies:
@@ -55,6 +55,7 @@ e2etest:
     stage: test
     before_script:
       - npm install -g http-server
+      - cypress install
     script:
        # start the server in the background
       - npm run start:ci 
