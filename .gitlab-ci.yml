@@ -47,17 +47,17 @@ bundle_app:
   stage: build
   script:
     - npm run build
-  # artifacts:
-  #   paths:
-  #     - build/      
+  artifacts:
+    paths:
+      - build/      
 
-# e2etest:    
-#     stage: test
-#     before_script:
-#       - npm install -g http-server
-#     script:
-#        # start the server in the background
-#       - npm run start:ci 
+e2etest:    
+    stage: test
+    before_script:
+      - npm install -g http-server
+    script:
+       # start the server in the background
+      - npm run start:ci 
 
 #       # run Cypress test in load balancing mode
 #       - npm run e2e:record -- --parallel --group "electrons on GitLab CI"
