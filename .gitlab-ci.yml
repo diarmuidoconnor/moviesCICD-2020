@@ -55,7 +55,6 @@ e2etest:
     stage: test
     before_script:
       - npm install -g http-server
-      - cypress install
     script:
        # start the server in the background
       - npm run start:ci 
