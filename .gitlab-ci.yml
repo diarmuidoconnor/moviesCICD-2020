@@ -28,10 +28,9 @@ install_dependencies:
   stage: install
   script:
     - npm ci
-     artifacts:
-        paths:
-          - node_modules/
-
+  artifacts:
+    paths:
+      - node_modules/
 
     # check Cypress binary path and cached versions
     # useful to make sure we are not carrying around old versions
