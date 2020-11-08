@@ -9,28 +9,29 @@ stages:
 # to point at the folders we can list as paths in "cache" job settings
 
 variables:
-#   npm_config_cache: "$CI_PROJECT_DIR/.npm"
+   npm_config_cache: "$CI_PROJECT_DIR/.npm"
    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
 
 # cache using branch  name
 # https://gitlab.com/help/ci/caching/index.md
 
 cache:
-#    key:
-#     files:
-#       - package.json
+   key:
+     files:
+        - package.json
    paths:
-#     - .npm
+      - .npm
       - cache/Cypress
-#     - node_modules
+      - node_modules
 
 install_dependencies:
   stage: install
   script:
     - npm ci
-  artifacts:
-    paths:
-      - node_modules/
+    - npm run cy:verify
+  # artifacts:
+  #   paths:
+  #     - node_modules/
 
 
 
@@ -40,7 +41,6 @@ install_dependencies:
     # - npx cypress cache path
     # - npx cypress cache list
     # - $(npm bin)/print-env CI
-    # - npm run cy:verify
     # - npm run cy:info
 
 bundle_app:
