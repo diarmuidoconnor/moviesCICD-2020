@@ -43,7 +43,8 @@ describe("Movie Details Page", () => {
     // });
   });
   beforeEach(() => {
-    cy.visit(`/movies/${movie.id}`);
+    cy.visit(`/`);
+    cy.get(".card").eq(2).find("img").click();
   });
 
   it("displays page header", () => {

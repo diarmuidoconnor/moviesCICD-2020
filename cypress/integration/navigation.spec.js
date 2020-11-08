@@ -25,7 +25,7 @@ describe("Navigation", () => {
       });
   });
 
-  describe("From the home page", () => {
+  describe.only("From the home page", () => {
     beforeEach(() => {
       cy.visit("/");
     });
@@ -50,7 +50,10 @@ describe("Navigation", () => {
 
   describe("From the Movie Details page ", () => {
     beforeEach(() => {
-      cy.visit(`/movies/${movieId}`);
+      cy.visit(`/`);
+      cy.get(".card").eq(2).find("img").click();
+  
+      // cy.visit(`/movies/${movieId}`);
     });
     it("should change browser URL when show/hide reviews is clicked", () => {
       cy.contains("Show Reviews").click();
