@@ -26,7 +26,7 @@ describe("Home Page ", () => {
   describe("Base tests", () => {
     it("displays page header", () => {
       cy.task("log", `No. movies received ${movies.length} `);
-      cy.get("h2").contains("No. Movies");
+      cy.get("h2").contains("Discover Movies");
       cy.get(".badge").contains(20);
     });
 
