@@ -25,7 +25,7 @@ describe("Navigation", () => {
       });
   });
 
-  describe.only("From the home page", () => {
+  describe("From the home page", () => {
     beforeEach(() => {
       cy.visit("/");
     });

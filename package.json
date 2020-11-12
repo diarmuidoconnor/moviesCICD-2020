@@ -24,7 +24,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "cy:verify": "cypress verify",
     "cy:info": "cypress info",
-    "start:ci": "start-server-and-test 'http-server ./build  -p 3000' 3000 'cypress run --browser chrome '",
+    "start:ci": "start-server-and-test 'http-server ./build  -p 3000' 3000 'cypress run --browser chrome --record'",
     "start:server": "cd ./build && httpserver -p 3000 && wait-on http://localhost:3000"
   },
   "eslintConfig": {
