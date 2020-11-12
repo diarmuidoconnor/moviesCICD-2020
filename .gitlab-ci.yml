@@ -51,6 +51,22 @@ bundle_app:
     paths:
       - build/      
 
+# build_jobY:
+#   stage: build
+#   dependencies:
+#     - bundle_app
+#   script:
+#     - echo "build job Y"      
+
+build_jobX:
+  stage: build
+  dependencies:
+    - bundle_app
+  only:
+    - demobranch
+  script:
+    - echo "build job X on demoBranch"  
+
 e2etest:    
     stage: test
     before_script:
