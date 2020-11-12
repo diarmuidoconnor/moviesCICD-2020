@@ -60,8 +60,6 @@ bundle_app:
 
 build_jobX:
   stage: build
-  dependencies:
-    - bundle_app
   only:
     - demobranch
   script:
