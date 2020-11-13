@@ -63,7 +63,7 @@ build_jobX:
   only:
     - demobranch
   script:
-    - echo "build job X on demoBranch"  
+    - echo "build job X on demoBranch works"  
 
 e2etest:    
     stage: test
